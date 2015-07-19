@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="keywords" content="">
+<meta name="description" content="">
+<title>jquery.cubeSlider</title>
+<script src="js/jquery.js"></script>
+<script src="js/jquery.cubeSlider.js"></script>
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+li {
+	float: left;
+	list-style-type: none;
+	position:absolute;
+	opacity: 0.6;
+	transition-property: all;
+	transition-duration:1s;
+	transition-timing-function:ease-in-out;
+	text-align: center;
+	color: #fff;
+	font-size: 70px;
+	font-family: 
+}
+
+ul {
+	width: 100px;
+	height: 100px;
+	margin: 100px auto;
+	-webkit-transform: rotateY(-10deg) rotateX(-10deg);
+	-webkit-transform-style: preserve-3d;
+	position:relative;
+}
+
+div {
+	background: red;
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	left: 10px;
+	bottom: 10px;
+}
+</style>
+<body>
+
+<ul class="box1">
+<li><div>1</div></li>
+<li><div>2</div></li>
+<li><div>3</div></li>
+<li><div>4</div></li>
+</ul>
+<ul class="box2">
+<li><div>1</div></li>
+<li><div>2</div></li>
+<li><div>3</div></li>
+<li><div>4</div></li>
+<li><div>5</div></li>
+<li><div>6</div></li>
+<li><div>7</div></li>
+</ul>
+<script>
+$('.box1').polygon({
+	width: 200,
+	height: 200,
+	timer: 2000
+});
+$('.box2').polygon({
+	width: 200,
+	height: 200,
+	timer: 2000
+});
+</script>
+</body>
+</html>
