@@ -27,12 +27,6 @@ $.fn.polygon = function(options) {
 		move(index);
 	});
 
-	if(ops.timer) {
-		var interval = setInterval(function() {
-			move(++ops.num);
-		}, ops.timer);
-	}
-
 	function move(num) {
 
 		ops.num = num >= length ? 0 :
@@ -42,6 +36,29 @@ $.fn.polygon = function(options) {
 			$(this).css({
 				transform: 'rotateY(' + (deg * -(ops.num - i)) + 'deg) ' +  'translateZ(' + translateZ +  'px)'
 			})
+		});
+	}
+
+
+	if(ops.timer) {
+		var timer = {
+			content: '',
+			start: function() {
+				this.content = setInterval(this.main, ops.timer);
+			},
+			stop: function() {
+				clearInterval(this.content);
+			},
+			main: function() {
+				move(++ops.num);
+			}
+		};
+
+		timer.start();
+		$content.hover(function(){
+			timer.stop();
+		},function(){
+			timer.start();
 		});
 	}
 }
