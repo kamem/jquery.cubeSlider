@@ -16,12 +16,14 @@ $.fn.polygon = function(options) {
 	var r = deg / 2 * Math.PI / 180;
 	var translateZ = ops.width / 2 / Math.tan (r);
 
+	var selectedNum = ops.num;
+
 	$child.css({
 		width: ops.width,
 		height: ops.height,
 	});
 
-	move(ops.num);
+	move(selectedNum);
 	$child.on('click', function() {
 		var index = $(this).index();
 		move(index);
@@ -29,12 +31,12 @@ $.fn.polygon = function(options) {
 
 	function move(num) {
 
-		ops.num = num >= length ? 0 :
+		selectedNum = num >= length ? 0 :
 			num < 0 ? length - 1 : num;
 
 		$child.each(function(i, el) {
 			$(this).css({
-				transform: 'rotateY(' + (deg * -(ops.num - i)) + 'deg) ' +  'translateZ(' + translateZ +  'px)'
+				transform: 'rotateY(' + (deg * -(selectedNum - i)) + 'deg) ' +  'translateZ(' + translateZ +  'px)'
 			})
 		});
 	}
@@ -50,7 +52,7 @@ $.fn.polygon = function(options) {
 				clearInterval(this.content);
 			},
 			main: function() {
-				move(++ops.num);
+				move(selectedNum + 1);
 			}
 		};
 
