@@ -11,6 +11,8 @@ $.fn.polygon = function(options) {
 	var $child = $content.find('> *');
 	var length = $child.length;
 
+	var selectedNum = ops.num;
+
 	var deg = 360 / length;
 
 	var r = deg / 2 * Math.PI / 180;
@@ -20,25 +22,46 @@ $.fn.polygon = function(options) {
 		width: ops.width,
 		height: ops.height,
 	});
+	$child.each(function(i, el) {
+		$(this).css({
+			transform: 'rotateY(' + (deg * -(selectedNum - i)) + 'deg) ' +  'translateZ(' + translateZ +  'px)'
+		})
+	});
 
-	move(ops.num);
 	$child.on('click', function() {
 		var index = $(this).index();
 		move(index);
 	});
 
 	function move(num) {
+		var prev = selectedNum;
 
-		ops.num = num >= length ? 0 :
+
+		selectedNum = num >= length ? 0 :
 			num < 0 ? length - 1 : num;
 
+		var amountOfMovement = getPositionNum(prev - selectedNum);
+
+
 		$child.each(function(i, el) {
+			var y = parseInt($(this).prop('style').transform.match(/rotateY\(([^deg)]+)/)[1]);
 			$(this).css({
-				transform: 'rotateY(' + (deg * -(ops.num - i)) + 'deg) ' +  'translateZ(' + translateZ +  'px)'
+				transform: 'rotateY(' + (y + deg * amountOfMovement) + 'deg) ' +  'translateZ(' + translateZ +  'px)'
 			})
 		});
 	}
 
+	function getPositionNum(positionNum) {
+		if(Math.abs(positionNum) > Math.floor((length - 1) / 2)) {
+			if(0 < positionNum) {
+				return positionNum + -length;
+			} else {
+				return positionNum + length
+			}
+		} else {
+			return positionNum;
+		}
+	}
 
 	if(ops.timer) {
 		var timer = {
@@ -50,7 +73,7 @@ $.fn.polygon = function(options) {
 				clearInterval(this.content);
 			},
 			main: function() {
-				move(++ops.num);
+				move(selectedNum + 1);
 			}
 		};
 
