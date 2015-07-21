@@ -36,15 +36,14 @@ $.fn.polygon = function(options) {
 	function move(num) {
 		var prev = selectedNum;
 
-
 		selectedNum = num >= length ? 0 :
 			num < 0 ? length - 1 : num;
 
 		var amountOfMovement = getPositionNum(prev - selectedNum);
 
-
 		$child.each(function(i, el) {
-			var y = parseInt($(this).prop('style').transform.match(/rotateY\(([^deg)]+)/)[1]);
+			var y = parseFloat($(this).prop('style').transform.match(/rotateY\(([^deg)]+)/)[1]);
+
 			$(this).css({
 				transform: 'rotateY(' + (y + deg * amountOfMovement) + 'deg) ' +  'translateZ(' + translateZ +  'px)'
 			})
